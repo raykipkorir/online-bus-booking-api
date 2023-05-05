@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 
 
 # Application definition
@@ -43,8 +43,8 @@ INSTALLED_APPS = [
      
     # local apps 
     "users",
-    "tickets",
-    "bus",
+    "booking",
+    "inventory",
 
     # third party apps
     "rest_framework",
@@ -135,6 +135,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+CURRENCY = "Ksh."
+
 AUTH_USER_MODEL = "users.User"
 
 
@@ -156,7 +159,10 @@ DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE":  True,
     "SET_PASSWORD_RETYPE" : True,
     "TOKEN_MODEL": None,
-    "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}/"
+    "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}/",
+    "PERMISSIONS": {
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
+    }
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
