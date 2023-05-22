@@ -1,15 +1,13 @@
-from rest_framework.mixins import CreateModelMixin
-from rest_framework.permissions import IsAdminUser
-from rest_framework.viewsets import GenericViewSet
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import IsAdminUser
+from rest_framework.viewsets import ModelViewSet
 
-from .serializers import AdminUserCreateSerializer
+from .serializers import AdminUserSerializer
 
 User = get_user_model()
 
-class AdminUserCreateViewSet(CreateModelMixin, GenericViewSet):
+class AdminUserViewSet(ModelViewSet):
 
-    serializer_class = AdminUserCreateSerializer
+    serializer_class = AdminUserSerializer
     permission_classes = [IsAdminUser]
-    queryset = User.objects.all()
-    
+    queryset = User.objects.filter(is_superuser=True)

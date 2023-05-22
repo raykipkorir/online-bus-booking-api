@@ -1,8 +1,8 @@
-import pytest
-from django.urls import reverse
-from rest_framework.test import APIClient
+# import pytest
+# from django.urls import reverse
+# from rest_framework.test import APIClient
 
-client = APIClient()
+# client = APIClient()
 
 
 # @pytest.mark.django_db
