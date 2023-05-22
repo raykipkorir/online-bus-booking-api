@@ -1,10 +1,10 @@
-# Online booking system API
+# Online Bus Booking system API
 
 ![Python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![postgresql](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
-Build with Django Rest Framework.
+Built with Django Rest Framework.
 
 # Overview
 
@@ -41,13 +41,33 @@ Build with Django Rest Framework.
 ```
 /api/users/reset_password/ - reset password
 ```
+
+
+## TripBus - Bus scheduled for a certain trip
 ```
-password_reset_confirm ???
+/api/buses/<id>/trip-bus/ (admin only)- All trips for a certain bus
 ```
-
-## Booking
-
-
+```
+/api/buses/<id>/trip-bus/<id>/ (admin only) - Retrieve, update or delete a trip for a certain bus
+```
+```
+/api/trip-bus/?from=&to=&travel_date= - Query trips using start, destination and date of travel
+```
+## Ticket
+```
+/api/buses/<id>/trip-bus/<id>/tickets/ - Create ticket for a certain trip(all users) or list all tickets for a certain trip(admin only)
+```
+```
+/api/buses/<id>/trip-bus/<id>/tickets/<id> - Retrieve ticket(all users) or update, delete ticket for a certain trip(admin only)
+```
+# Admin dashboard routes
+## Bus
+```
+/api/buses/ - list and create bus (admin only)
+```
+```
+/api/buses<id> - retrieve, update and delete bus (admin only)
+```
 ## Drivers
 ```
 /api/drivers/ - list and create driver (admin only)
@@ -64,6 +84,7 @@ password_reset_confirm ???
 ```
 ## Admins
 ```
-/api/admins/ - create new admins (admin only)
+/api/admins/ - list and create new admins (admin only)
 ```
-
+```
+/api/admins/<id> - retrieve, update and delete admin (admin only)

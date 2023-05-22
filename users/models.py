@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class UserManager(BaseUserManager):
-
+    """Custom user manager"""
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
@@ -19,13 +19,15 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_user(self, email=None, password=None, **extra_fields):
+        """Create normal user"""
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email=None, password=None, **extra_fields):
+        """Create superuser"""
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -38,7 +40,7 @@ class UserManager(BaseUserManager):
 
 
 class User(PermissionsMixin, AbstractBaseUser):
-
+    """Custom user model"""
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
@@ -65,9 +67,9 @@ class User(PermissionsMixin, AbstractBaseUser):
     REQUIRED_FIELDS = ["first_name", "last_name", "phone_number"]
 
     @property
-    def get_fullname(self):
+    def fullname(self) -> str:
+        """Concatenate first_name and last_name"""
         return f"{self.first_name} {self.last_name}"
-    
-    def __str__(self):
-        return f"{self.get_fullname}"
-    
+
+    def __str__(self) -> str:
+        return f"{self.fullname}"

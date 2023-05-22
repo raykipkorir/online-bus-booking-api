@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 
 from decouple import Csv, config
+from dj_database_url import parse as db_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-     
-    # local apps 
+
+    # local apps
     "users",
     "booking",
     "inventory",
@@ -49,12 +50,14 @@ INSTALLED_APPS = [
     # third party apps
     "rest_framework",
     "djoser",
-    "phonenumber_field"
+    "phonenumber_field",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -86,13 +89,19 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': config(
+        'DATABASE_URL',
+        default='sqlite:///db.sqlite3',
+        cast=db_url
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -122,7 +131,7 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -140,7 +149,7 @@ CURRENCY = "Ksh."
 
 AUTH_USER_MODEL = "users.User"
 
-
+# django-rest-framework configurations
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -150,11 +159,15 @@ REST_FRAMEWORK = {
 
 PHONENUMBER_DEFAULT_REGION = "KE"
 
+
+# simple jwt configurations
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=15)
 }
 
+
+# djoser configurations
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE":  True,
     "SET_PASSWORD_RETYPE" : True,
@@ -165,4 +178,10 @@ DJOSER = {
     }
 }
 
+
+# email configurations
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+# cors
+CORS_ALLOW_ALL_ORIGINS = True
