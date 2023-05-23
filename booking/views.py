@@ -1,6 +1,7 @@
 # pylint: disable=E1101
 
 from django.shortcuts import get_list_or_404, get_object_or_404
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -12,11 +13,21 @@ from .models import Ticket, TripBus
 from .serializers import TicketSerializer, TripBusSerializer
 
 
+@extend_schema(
+    parameters=[
+        OpenApiParameter("buses_pk", location=OpenApiParameter.PATH, type=int)
+    ]
+)
 class TripBusViewSet(viewsets.ModelViewSet):
+    """Trip bus"""
     serializer_class = TripBusSerializer
     queryset = TripBus.objects.all()
 
     def get_permissions(self):
+        """
+        All users can query and retrieve bus for a certain trip.
+        Only Admins can create, update, delete and list all buses scheduled for a trip
+        """
         if self.action in ("retrieve", "list") and self.request.query_params:
             self.permission_classes = [AllowAny]
         elif self.action in ("create", "list", "update", "destroy"):
@@ -62,8 +73,15 @@ class TripBusViewSet(viewsets.ModelViewSet):
         return super().get_queryset()
 
 
-# book ticket view
+@extend_schema(
+    parameters=[
+        OpenApiParameter("buses_pk", location=OpenApiParameter.PATH, type=int),
+        OpenApiParameter("trip_bus_pk", location=OpenApiParameter.PATH, type=int),
+        OpenApiParameter("id", location=OpenApiParameter.PATH, type=int),
+    ]
+)
 class TicketViewSet(viewsets.ModelViewSet):
+    """book ticket view"""
     serializer_class = TicketSerializer
 
     def get_permissions(self):

@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "phonenumber_field",
-    "corsheaders"
+    "corsheaders",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -89,12 +90,6 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
 DATABASES = {
     'default': config(
         'DATABASE_URL',
@@ -149,11 +144,13 @@ CURRENCY = "Ksh."
 
 AUTH_USER_MODEL = "users.User"
 
+
 # django-rest-framework configurations
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
@@ -185,3 +182,9 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # cors
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+# drf spectacular configs
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Online bus booking API",
+}
