@@ -7,6 +7,41 @@
 Built with Django Rest Framework.
 
 # Overview
+Deployed successfully on Render -> [online-bus-booking-api](https://online-bus-booking-api.onrender.com/)
+
+[Swagger documentation](https://online-bus-booking-api.onrender.com/api/v1/schema/swagger/)
+
+[Redoc documentation](https://online-bus-booking-api.onrender.com/api/v1/schema/redoc/)
+
+# Installation
+
+Clone the repository in your terminal
+```
+git clone https://github.com/raykipkorir/online-bus-booking-api.git
+```
+Navigate into the repo
+```
+cd online-bus-booking-api
+```
+Create virtual environment
+```
+virtualenv venv
+```
+Activate virtual environment
+```
+\venv\Scripts\activate - For windows users
+
+source venv/bin/activate - For unix based systems
+```
+Install dependencies
+```
+pip install -r requirements.txt
+```
+Run migrations
+```
+python manage.py migrate
+```
+Note: Create .env file in the root directory to store your environment variables. Check .env.example to see environment variables that should be created.
 
 # Endpoints
 
@@ -88,3 +123,8 @@ Built with Django Rest Framework.
 ```
 ```
 /api/admins/<id> - retrieve, update and delete admin (admin only)
+```
+## Contribute
+Any minor contribution would be greatly appreciated
+
+Happy coding 💚
