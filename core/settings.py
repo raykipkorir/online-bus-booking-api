@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default=False)
+DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -226,8 +226,8 @@ LOGGING = {
         "file": {
             "class": "logging.FileHandler",
             "filename": "general.log",
-            "formatter": "verbose"
-            # "level": "DEBUG"
+            "formatter": "verbose",
+            "level": "DEBUG",
         },
         "mail_admins": {
             "level": "WARNING",
@@ -249,3 +249,7 @@ LOGGING = {
 }
 
 ADMINS = [("Raymond", "rayjbackup02@gmail.com")]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://online-bus-booking-api.onrender.com/",
+]
