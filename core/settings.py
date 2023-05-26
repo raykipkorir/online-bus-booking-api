@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "corsheaders",
     "drf_spectacular",
+    # "drf_spectacular_sidecar"
 ]
 
 MIDDLEWARE = [
@@ -71,7 +73,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -133,6 +135,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -151,6 +156,14 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
 }
 
 
@@ -192,6 +205,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # drf spectacular configs
 SPECTACULAR_SETTINGS = {
     "TITLE": "Online bus booking API",
+    "DESCRIPTION": "Online bus booking API",
 }
 
 
@@ -231,17 +245,4 @@ LOGGING = {
     },
 }
 
-ADMINS = [("Raymond", "raykipkorir02@gmail.com"), ("RayJ", "rayjbackup02@gmail.com")]
-
-
-# api throttling
-REST_FRAMEWORK = {
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
-    ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/day',
-        'user': '1000/day'
-    }
-}
+ADMINS = [("Raymond", "rayjbackup02@gmail.com")]

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <title>Online Bus Booking API</title>
+</head>
+<body>
+    <h1>Welcome to Online Bus Booking API</h1>
+    <div>
+        <h2>Documentation</h2>
+        <ul>
+            <li><a href="{% url 'swagger' %}">Swagger Documentation</a></li>
+            <li><a href="{% url 'redoc' %}">Redoc Documentation</a></li>
+        </ul>
+    </div>
+    <div>
+        <h2>Overview</h2>
+        <p>This API is built using Django Rest Framework connected to POSTGRESQL db</p>
+        <h3>Throttling policy</h3>
+        <p>100/day - for unauthenticated users</p>
+        <p>1000/day - for authenticated users</p>
+        <h3>Contribute</h3>
+        <a href="https://github.com/raykipkorir/online-bus-booking-api/">Github</a>
+    </div>
+</body>
+</html>
