@@ -28,18 +28,22 @@ Create virtual environment
 virtualenv venv
 ```
 Activate virtual environment
-```
-\venv\Scripts\activate - For windows users
 
-source venv/bin/activate - For unix based systems
+- For windows users
+```
+venv\Scripts\activate
+```
+- For unix based systems
+```
+source venv/bin/activate
 ```
 Install dependencies
 ```
 pip install -r requirements.txt
 ```
-Run migrations
+Run migrations and server
 ```
-python manage.py migrate
+make server
 ```
 Note: Create .env file in the root directory to store your environment variables. Check .env.example to see environment variables that should be created.
 
