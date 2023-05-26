@@ -230,7 +230,7 @@ LOGGING = {
             "level": "DEBUG",
         },
         "mail_admins": {
-            "level": "WARNING",
+            "level": "ERROR",
             "class": "django.utils.log.AdminEmailHandler",
             "include_html": True,
             "formatter": "verbose"
