@@ -14,8 +14,10 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import sentry_sdk
 from decouple import Csv, config
 from dj_database_url import parse as db_url
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -253,3 +255,21 @@ ADMINS = [("Raymond", "rayjbackup02@gmail.com")]
 CSRF_TRUSTED_ORIGINS = [
     "https://online-bus-booking-api.onrender.com/",
 ]
+
+
+# sentry
+sentry_sdk.init(
+    dsn=config("SENTRY_DSN"),
+    integrations=[
+        DjangoIntegration(),
+    ],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
