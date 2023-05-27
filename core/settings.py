@@ -259,7 +259,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 # sentry
 sentry_sdk.init(
-    dsn=config("CONFIG_SENTRY"),
+    dsn=config("SENTRY_DSN"),
     integrations=[
         DjangoIntegration(),
     ],
