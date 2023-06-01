@@ -36,5 +36,5 @@ jobs:
         DEBUG: false
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
-        python manage.py collecstatic --no-input
+        python manage.py collectstatic --no-input
         python manage.py test
